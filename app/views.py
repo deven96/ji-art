@@ -29,7 +29,10 @@ class AlbumDetail(DetailView):
         # Call the base implementation first to get a context
         context = super(AlbumDetail, self).get_context_data(**kwargs)
         # Add in a QuerySet of all the images
-        context['images'] = AlbumImage.objects.filter(album=self.object.id)
+        try:
+            context['images'] = AlbumImage.objects.filter(album=self.object.id)
+        except:
+            pass
         return context
 
 def handler404(request, exception):

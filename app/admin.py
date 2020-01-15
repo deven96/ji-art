@@ -45,7 +45,7 @@ class AlbumModelAdmin(admin.ModelAdmin):
                     filename = '{0}{1}.jpg'.format(album.slug, str(uuid.uuid4())[-13:])
                     img.image.save(filename, contentfile)
                 
-                    filepath = '{0}/albums/{1}'.format(settings.MEDIA_ROOT, filename)
+                    filepath = '{0}/albums/{1}'.format(settings.MEDIA_URL, filename)
                     with Image.open(filepath) as i:
                         img.width, img.height = i.size
 
