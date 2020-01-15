@@ -21,6 +21,9 @@ class Album(models.Model):
     def __unicode__(self):
         return self.title
 
+    def __str__(self):
+        return self.title
+
 class AlbumImage(models.Model):
     image = ProcessedImageField(upload_to='albums', processors=[ResizeToFit(1280)], format='JPEG', options={'quality': 70})
     thumb = ProcessedImageField(upload_to='albums', processors=[ResizeToFit(300)], format='JPEG', options={'quality': 80})

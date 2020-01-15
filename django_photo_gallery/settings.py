@@ -1,4 +1,5 @@
 import os
+import dj_database_url
 #import posixpath
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -10,7 +11,7 @@ SECRET_KEY = '8ace3072-47a0-4910-b522-dc3601f38c35'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['0.0.0.0','127.0.0.1','localhost','django-photo-gallery.velingeorgiev.pro']
+ALLOWED_HOSTS = ['0.0.0.0','127.0.0.1','localhost','ji-art.herokuapp.com']
 INTERNAL_IPS = ('0.0.0.0','127.0.0.1','localhost',)
 
 INSTALLED_APPS = [
@@ -18,6 +19,8 @@ INSTALLED_APPS = [
     'material',
     'material.admin',
     'imagekit',
+    'cloudinary_storage',
+    'cloudinary',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -37,7 +40,8 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware'
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'django_photo_gallery.urls'
@@ -128,3 +132,11 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder'
 )
 
+DATABASE_URL = os.environ.get("DATABASE_URL", None)
+#heroku database
+if DATABASE_URL:
+    DATABASES = {
+            'default': dj_database_url.parse(DATABASE_URL)
+            }
+# DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
